@@ -1,0 +1,20 @@
+{
+  "name": "qiaomu-arxiv",
+  "version": "0.1.0",
+  "private": false,
+  "description": "中文优先的 arXiv 论文发现站：AI 每日精选、主题策展、搜索、一键下载 PDF 与在线阅读，DeepSeek 驱动解读与推荐。",
+  "license": "MIT",
+  "author": "向阳乔木 <https://qiaomu.ai>",
+  "type": "module",
+  "scripts": {
+    "dev": "node server/index.mjs",
+    "start": "node server/index.mjs",
+    "check": "node scripts/check.mjs",
+    "lint": "node scripts/check.mjs",
+    "build": "node scripts/check.mjs",
+    "warm-featured": "node scripts/warm-featured.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

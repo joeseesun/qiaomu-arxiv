@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>乔木 arXiv — AI 精选论文，中文解读，一键读原文</title>
+  <meta name="description" content="{{META_DESCRIPTION}}">
+  <link rel="canonical" href="{{CANONICAL}}">
+  <meta property="og:title" content="{{META_TITLE}}">
+  <meta property="og:description" content="{{META_DESCRIPTION}}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{CANONICAL}}">
+  <meta name="theme-color" content="#F6F3EA">
+  <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a class="brand" href="/" data-link aria-label="乔木 arXiv 首页">
+        <svg class="brand-mark" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+          <rect x="1.5" y="1.5" width="25" height="25" rx="6" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M7 20 L12.2 8 L15.8 8 L21 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="9.4" y1="15.6" x2="18.6" y2="15.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-name">乔木 <em>arXiv</em></span>
+      </a>
+      <nav class="main-nav" aria-label="主导航">
+        <a href="/" data-link data-nav="home">首页</a>
+        <a href="/topics" data-link data-nav="topics">主题</a>
+        <a href="/favorites" data-link data-nav="favorites">收藏</a>
+      </nav>
+      <form class="header-search" id="headerSearch" role="search" action="/search">
+        <svg width="15" height="15" viewBox="0 0 15 15" aria-hidden="true" class="search-icon">
+          <circle cx="6.5" cy="6.5" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <line x1="10.2" y1="10.2" x2="13.5" y2="13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <input type="search" name="q" placeholder="搜论文、作者、arXiv ID…" autocomplete="off" aria-label="搜索论文">
+        <button type="submit" class="search-submit" aria-label="搜索">
+          <svg width="13" height="13" viewBox="0 0 13 13" aria-hidden="true">
+            <path d="M1 6.5h10M7.5 2.5l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </header>
+
+  <main id="app" tabindex="-1">
+    <div class="page-loading" aria-hidden="true"><span></span><span></span><span></span></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>论文数据来自 <a href="https://arxiv.org/" target="_blank" rel="noopener">arXiv.org</a>，遵循其 API 使用条款</span>
+      <span>AI 解读基于摘要生成，仅供参考，细节请阅读原文</span>
+      <a href="https://qiaomu.ai/" target="_blank" rel="noopener">Powered by 向阳乔木</a>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>
