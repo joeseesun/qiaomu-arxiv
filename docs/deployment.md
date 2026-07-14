@@ -13,8 +13,11 @@
   - TLS：certbot webroot `/www/wwwroot/arxiv.qiaomu.ai`
   - Umami：复用 umami.qiaomu.ai，单独 website 条目
 - 进展：
-  - [x] 代码开源到 GitHub
-  - [ ] DNS
-  - [ ] VPS 部署 + systemd
-  - [ ] Nginx + TLS
-  - [ ] Umami + 验收
+  - [x] 代码开源到 GitHub（joeseesun/qiaomu-arxiv）
+  - [x] DNS：A 记录 arxiv → 76.13.103.27（proxied=false）
+  - [x] VPS 部署：`/opt/qiaomu-apps/qiaomu-arxiv`，systemd `qiaomu-arxiv.service`（127.0.0.1:3208，env `/etc/qiaomu-arxiv.env`）
+  - [x] Nginx + TLS：vhost `/www/server/panel/vhost/nginx/arxiv.qiaomu.ai.conf`，cert `/etc/letsencrypt/live/arxiv.qiaomu.ai/`
+  - [x] Umami：website `qiaomu-arxiv` / ID `2b977e8c-b464-4412-b244-64827d9b2231`
+  - [x] 线上验收：首页 / 论文页 meta / SSE 流式解读 / sitemap / robots / 零 console 报错
+- 运行方式：git pull 更新代码后 `systemctl restart qiaomu-arxiv`；缓存目录 `storage/`（ReadWritePaths 已放行）
+- 备注：reward / 关注 / 乔木推荐 等站群 affordances 本次未加，保持页面干净，需要再加
