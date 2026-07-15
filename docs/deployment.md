@@ -21,3 +21,16 @@
   - [x] 线上验收：首页 / 论文页 meta / SSE 流式解读 / sitemap / robots / 零 console 报错
 - 运行方式：git pull 更新代码后 `systemctl restart qiaomu-arxiv`；缓存目录 `storage/`（ReadWritePaths 已放行）
 - 备注：reward / 关注 / 乔木推荐 等站群 affordances 本次未加，保持页面干净，需要再加
+
+## 2026-07-15 二期：经典论文 + 搜索下载
+
+- 新增「经典论文」：AI 史上 50 篇里程碑论文，年份时间线 + 中英双语标题/简介
+  - 数据：`server/data/classics-seed.json`（人工校准 ID + 英文标题）→ `scripts/generate-classics.mjs`（DeepSeek 生成双语）→ `server/data/classics.json`（提交入库，运行时静态读）
+  - 生成不依赖 arXiv API（限流严格），只调一次 DeepSeek
+- 新增「搜索下载」：中文自然语言 → DeepSeek 生成 arXiv 检索式 → 结果标题批量翻译（`storage/titles.json` 持久缓存），查询结果缓存 24h（`storage/discover/`）
+  - 搜索词轮播 18 条，每 5 秒切换，点击即搜；`/discover?q=` 支持深链
+- 运维踩坑：
+  - arXiv 429 是短时冷却（IP+UA 维度），密集测试触发后需停手等数分钟，继续请求会延长冷却
+  - export.arxiv.org 偶发响应 >20s，fetch 超时已调到 35s（`server/arxiv.mjs`）
+  - discover 错误已映射为友好中文提示（429/超时/上游错误）
+  - 建议上线后预热 18 条 suggestion 查询缓存，用户点击即秒出
