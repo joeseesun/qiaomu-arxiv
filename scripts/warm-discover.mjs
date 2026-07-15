@@ -1,7 +1,8 @@
-// 预热搜索下载的 suggestion 查询缓存：node scripts/warm-discover.mjs [baseUrl]
+// 预热搜索下载的 suggestion 查询缓存：node scripts/warm-discover.mjs [baseUrl] [间隔秒]
 // 逐条 POST /api/discover，结果落盘缓存 24h，用户点击轮播词即秒出。
-// 限速保守：每条间隔 12s；遇 429/504 等 60s 重试一次。
+// 默认间隔 12s（arXiv 敏感时期建议 45）；遇 429/504 等 90s 重试一次。
 const baseUrl = (process.argv[2] || "http://127.0.0.1:4174").replace(/\/$/, "");
+const gapMs = Math.max(3, Number(process.argv[3]) || 12) * 1000;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const { suggestions } = await (await fetch(`${baseUrl}/api/discover/suggestions`)).json();
@@ -26,8 +27,8 @@ for (const q of suggestions) {
       }
       console.log(`✗ ${q} [${res.status}] ${body.message || ""}`);
       if (attempt === 1 && (res.status === 429 || res.status === 503 || res.status === 504)) {
-        console.log("  等 60s 重试…");
-        await sleep(60000);
+        console.log("  等 90s 重试…");
+        await sleep(90000);
         continue;
       }
       break;
@@ -36,6 +37,6 @@ for (const q of suggestions) {
       break;
     }
   }
-  await sleep(12000);
+  await sleep(gapMs);
 }
 console.log(`完成：${ok}/${suggestions.length} 条预热成功`);
