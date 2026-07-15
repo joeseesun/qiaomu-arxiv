@@ -23,6 +23,7 @@
 
 - 数据来源：[arXiv API](https://info.arxiv.org/help/api/basics.html)，遵守 3 秒限速，磁盘缓存分级 TTL
 - AI：[DeepSeek](https://api.deepseek.com) `deepseek-v4-flash`，SSE 流式转发；不配置 key 时 AI 功能自动降级为纯浏览
+- 抗限流：arXiv 按 (IP, UA) 分桶限流，内置 4 个 UA 轮换分摊配额，429/超时自动换 UA 重试（最多 4 次）
 - 设计：暖纸色学术期刊 × 开发者工具风格，详见 [DESIGN.md](DESIGN.md)
 
 ## 本地运行

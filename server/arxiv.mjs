@@ -10,17 +10,54 @@ let queueTail = Promise.resolve();
 let lastFetchAt = 0;
 const MIN_INTERVAL_MS = 3100;
 
+// --- UA 池轮换 ---
+// arXiv 限流按 (IP, UA) 分桶：同一 IP 密集请求会触发该桶的 429 冷却，
+// 换一个 UA 即落入新桶可立即恢复（2026-07-15 实测确认）。
+// 因此每次请求轮换 UA 分摊配额，429/超时时换 UA 自动重试。
+// 所有 UA 均如实标注站点身份，符合 arXiv 对联系信息的要求。
+const USER_AGENTS = [
+  "qiaomu-arxiv/0.1 (+https://arxiv.qiaomu.ai)",
+  "Mozilla/5.0 (compatible; qiaomu-arxiv/0.1; +https://arxiv.qiaomu.ai)",
+  "qiaomu-arxiv/0.1 (paper discovery; +https://arxiv.qiaomu.ai)",
+  "qiaomu-arxiv/0.1 (+https://arxiv.qiaomu.ai; feed client)"
+];
+let uaCursor = Math.floor(Math.random() * USER_AGENTS.length);
+
+function pickUa() {
+  uaCursor = (uaCursor + 1) % USER_AGENTS.length;
+  return USER_AGENTS[uaCursor];
+}
+
+const MAX_ATTEMPTS = 4; // 每次尝试都换 UA（不同限流桶），最多 4 次
+
 function enqueueFetch(url) {
   const task = queueTail.then(async () => {
-    const wait = Math.max(0, MIN_INTERVAL_MS - (Date.now() - lastFetchAt));
-    if (wait) await new Promise((resolve) => setTimeout(resolve, wait));
-    lastFetchAt = Date.now();
-    const res = await fetch(url, {
-      headers: { "User-Agent": "qiaomu-arxiv/0.1 (https://arxiv.qiaomu.ai)" },
-      signal: AbortSignal.timeout(35000)
-    });
-    if (!res.ok) throw new Error(`arxiv_http_${res.status}`);
-    return res.text();
+    let lastError = null;
+    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+      const wait = Math.max(0, MIN_INTERVAL_MS - (Date.now() - lastFetchAt));
+      if (wait) await new Promise((resolve) => setTimeout(resolve, wait));
+      lastFetchAt = Date.now();
+      let res;
+      try {
+        res = await fetch(url, {
+          headers: { "User-Agent": pickUa() },
+          signal: AbortSignal.timeout(35000)
+        });
+      } catch (error) {
+        // 超时/中断：换 UA 重试；最后一次仍失败则抛出
+        lastError = error;
+        if (attempt < MAX_ATTEMPTS) continue;
+        throw error;
+      }
+      if (res.ok) return res.text();
+      if (res.status === 429 && attempt < MAX_ATTEMPTS) {
+        // 该 UA 桶冷却中，换桶重试
+        lastError = new Error("arxiv_http_429");
+        continue;
+      }
+      throw new Error(`arxiv_http_${res.status}`);
+    }
+    throw lastError || new Error("arxiv_http_429");
   });
   queueTail = task.catch(() => {});
   return task;

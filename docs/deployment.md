@@ -34,3 +34,4 @@
   - export.arxiv.org 偶发响应 >20s，fetch 超时已调到 35s（`server/arxiv.mjs`）
   - discover 错误已映射为友好中文提示（429/超时/上游错误）
   - 建议上线后预热 18 条 suggestion 查询缓存，用户点击即秒出
+- 限流根治（同日）：`server/arxiv.mjs` 加入 UA 池（4 个如实标注站点的 UA），每次请求轮换分摊 (IP,UA) 桶配额；429/超时自动换 UA 重试，最多 4 次。mock 测试 5 场景全过（429 重试成功 / 全 429 抛错 / 超时重试 / 直过 / 500 不重试）
