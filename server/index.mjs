@@ -5,8 +5,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { config, rootDir, runtimeStatus } from "./config.mjs";
 import { getPaper, latestPapers, recentPool, searchPapers, slimPaper, topicPapers } from "./arxiv.mjs";
-import { categoryFilters, featuredCategories, getTopic, topics } from "./topics.mjs";
+import { categoryFilters, discoverSuggestions, featuredCategories, getTopic, topics } from "./topics.mjs";
 import { aiEnabled, generateFeatured, readFeatured, streamChat, streamExplain } from "./ai.mjs";
+import { discover } from "./discover.mjs";
+import { listClassics } from "./classics.mjs";
 import { renderAppHtml, robotsTxt, sitemapXml } from "./seo.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -149,6 +151,49 @@ async function handleApi(req, res, url) {
     return;
   }
 
+  if (req.method === "GET" && url.pathname === "/api/classics") {
+    json(res, 200, { classics: await listClassics() });
+    return;
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/discover/suggestions") {
+    json(res, 200, { suggestions: discoverSuggestions });
+    return;
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/discover") {
+    const ip = getClientIp(req);
+    const { allowed } = checkAiLimit(ip);
+    if (!allowed) {
+      res.setHeader("Retry-After", "3600");
+      json(res, 429, { error: "rate_limited", message: "AI 检索每小时限 30 次，请稍后再试。" });
+      return;
+    }
+    const body = await parseBody(req);
+    const question = String(body.q || "").trim();
+    if (!question || question.length > 300) {
+      json(res, 400, { error: "bad_query", message: "请输入 1-300 字符的问题。" });
+      return;
+    }
+    try {
+      json(res, 200, await discover(question));
+    } catch (error) {
+      const msg = String(error?.message || "");
+      if (msg.includes("arxiv_http_429")) {
+        res.setHeader("Retry-After", "60");
+        json(res, 503, { error: "arxiv_rate_limited", message: "arXiv 接口限流中，请 1 分钟后重试。" });
+      } else if (msg.includes("arxiv_http_")) {
+        json(res, 502, { error: "arxiv_error", message: "arXiv 接口暂时不可用，请稍后重试。" });
+      } else if (error?.name === "AbortError" || error?.name === "TimeoutError" || msg.includes("aborted")) {
+        json(res, 504, { error: "upstream_timeout", message: "检索超时，arXiv 可能繁忙，请稍后重试。" });
+      } else {
+        console.error("discover failed:", error);
+        json(res, 500, { error: "server_error", message: "检索失败，请稍后重试。" });
+      }
+    }
+    return;
+  }
+
   const topicMatch = url.pathname.match(/^\/api\/topic\/([\w-]+)$/);
   if (req.method === "GET" && topicMatch) {
     const topic = getTopic(topicMatch[1]);
@@ -273,7 +318,7 @@ async function servePublic(req, res, url) {
       res.end(req.method === "HEAD" ? "" : await sitemapXml());
       return;
     }
-    if (url.pathname === "/" || /^\/(paper|topic|search)(\/|$)/.test(url.pathname)) {
+    if (url.pathname === "/" || /^\/(paper|topic|search|classics|discover)(\/|$)/.test(url.pathname)) {
       res.setHeader("Content-Type", mimeTypes.get(".html"));
       res.setHeader("Cache-Control", "no-cache");
       res.setHeader("X-Content-Type-Options", "nosniff");

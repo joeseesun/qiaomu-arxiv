@@ -228,6 +228,17 @@ export async function getPaper(id) {
   return entries[0] || null;
 }
 
+// 批量按 ID 取论文（一次请求，最多 50 个）
+export async function getPapersByIds(ids) {
+  const valid = ids.map(normalizeArxivId).filter(Boolean).map((p) => p.id);
+  if (!valid.length) return [];
+  const { entries } = await runQuery(
+    { id_list: valid.slice(0, 50).join(","), max_results: String(Math.min(50, valid.length)) },
+    TTL.paper
+  );
+  return entries;
+}
+
 // 每日精选候选池：按分类抓最新提交（每个分类独立缓存，错峰请求）。
 export async function recentPool(categories, { perCategory = 12 } = {}) {
   const pool = [];

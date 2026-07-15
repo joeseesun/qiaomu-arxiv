@@ -1,0 +1,502 @@
+[
+  {
+    "rank": 1,
+    "id": "1302.4389",
+    "tag": "词向量",
+    "title": "Efficient Estimation of Word Representations in Vector Space",
+    "titleZh": "词向量空间中的高效估计",
+    "year": "2013",
+    "introZh": "提出 Word2Vec 模型，通过连续词袋和 Skip-gram 架构高效学习高质量词向量，奠定了词嵌入在 NLP 中的基础地位。",
+    "introEn": "Proposes Word2Vec, using CBOW and Skip-gram to learn high-quality word embeddings efficiently, laying the foundation for word representation in NLP."
+  },
+  {
+    "rank": 2,
+    "id": "1311.2901",
+    "tag": "目标检测",
+    "title": "Rich feature hierarchies for accurate object detection and semantic segmentation",
+    "titleZh": "用于精确目标检测和语义分割的丰富特征层次",
+    "year": "2013",
+    "introZh": "提出 R-CNN，将卷积神经网络应用于区域提议，实现高精度目标检测，是深度学习目标检测的开创性工作。",
+    "introEn": "Introduces R-CNN, applying CNNs to region proposals for accurate object detection, a pioneering work in deep learning-based detection."
+  },
+  {
+    "rank": 3,
+    "id": "1312.6114",
+    "tag": "生成模型",
+    "title": "Auto-Encoding Variational Bayes",
+    "titleZh": "自编码变分贝叶斯",
+    "year": "2013",
+    "introZh": "提出变分自编码器（VAE），将变分推断与神经网络结合，开创了深度生成模型的新范式。",
+    "introEn": "Proposes the Variational Autoencoder (VAE), merging variational inference with neural networks, pioneering deep generative models."
+  },
+  {
+    "rank": 4,
+    "id": "1406.2661",
+    "tag": "生成对抗",
+    "title": "Generative Adversarial Nets",
+    "titleZh": "生成对抗网络",
+    "year": "2014",
+    "introZh": "提出 GAN，通过生成器与判别器的对抗训练生成逼真数据，是生成模型领域的里程碑。",
+    "introEn": "Introduces GANs, using adversarial training between generator and discriminator to create realistic data, a milestone in generative models."
+  },
+  {
+    "rank": 5,
+    "id": "1409.0473",
+    "tag": "注意力机制",
+    "title": "Neural Machine Translation by Jointly Learning to Align and Translate",
+    "titleZh": "通过联合学习对齐和翻译的神经机器翻译",
+    "year": "2014",
+    "introZh": "提出注意力机制，允许模型在翻译时动态对齐源语言，显著提升神经机器翻译性能。",
+    "introEn": "Introduces the attention mechanism for dynamic alignment in translation, significantly improving neural machine translation."
+  },
+  {
+    "rank": 6,
+    "id": "1409.1556",
+    "tag": "视觉骨干",
+    "title": "Very Deep Convolutional Networks for Large-Scale Image Recognition",
+    "titleZh": "用于大规模图像识别的极深卷积网络",
+    "year": "2014",
+    "introZh": "提出 VGGNet，通过堆叠小卷积核构建深层网络，验证了深度对视觉识别的重要性。",
+    "introEn": "Proposes VGGNet, using stacked small convolutional filters to build deep networks, demonstrating the importance of depth in vision."
+  },
+  {
+    "rank": 7,
+    "id": "1409.3215",
+    "tag": "序列到序列",
+    "title": "Sequence to Sequence Learning with Neural Networks",
+    "titleZh": "基于神经网络的序列到序列学习",
+    "year": "2014",
+    "introZh": "提出 Seq2Seq 框架，使用编码器-解码器架构处理变长序列，是序列生成任务的基础。",
+    "introEn": "Introduces the Seq2Seq framework with encoder-decoder architecture for variable-length sequences, foundational for sequence generation."
+  },
+  {
+    "rank": 8,
+    "id": "1411.4038",
+    "tag": "语义分割",
+    "title": "Fully Convolutional Networks for Semantic Segmentation",
+    "titleZh": "用于语义分割的全卷积网络",
+    "year": "2014",
+    "introZh": "提出 FCN，将全连接层替换为卷积层实现像素级预测，是深度学习语义分割的开山之作。",
+    "introEn": "Proposes FCN, replacing fully connected layers with convolutions for pixel-wise prediction, pioneering deep learning semantic segmentation."
+  },
+  {
+    "rank": 9,
+    "id": "1412.6980",
+    "tag": "优化器",
+    "title": "Adam: A Method for Stochastic Optimization",
+    "titleZh": "Adam：一种随机优化方法",
+    "year": "2014",
+    "introZh": "提出 Adam 优化器，结合动量和自适应学习率，成为深度学习中最广泛使用的优化算法。",
+    "introEn": "Introduces Adam optimizer, combining momentum and adaptive learning rates, becoming the most widely used optimization algorithm in deep learning."
+  },
+  {
+    "rank": 10,
+    "id": "1502.03167",
+    "tag": "训练稳定",
+    "title": "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift",
+    "titleZh": "批归一化：通过减少内部协变量偏移加速深度网络训练",
+    "year": "2015",
+    "introZh": "提出 Batch Normalization，通过归一化层输入加速训练并提升稳定性，是训练深度网络的关键技术。",
+    "introEn": "Proposes Batch Normalization, normalizing layer inputs to accelerate training and improve stability, a key technique for deep networks."
+  },
+  {
+    "rank": 11,
+    "id": "1505.04597",
+    "tag": "图像分割",
+    "title": "U-Net: Convolutional Networks for Biomedical Image Segmentation",
+    "titleZh": "U-Net：用于生物医学图像分割的卷积网络",
+    "year": "2015",
+    "introZh": "提出 U-Net，采用对称编码-解码结构，在少量数据下实现精确分割，成为医学图像分割的标杆。",
+    "introEn": "Introduces U-Net with symmetric encoder-decoder for precise segmentation with limited data, a benchmark in medical image segmentation."
+  },
+  {
+    "rank": 12,
+    "id": "1506.01497",
+    "tag": "目标检测",
+    "title": "SSD: Single Shot MultiBox Detector",
+    "titleZh": "SSD：单次多框检测器",
+    "year": "2015",
+    "introZh": "提出 SSD，实现单次前向传播的多尺度目标检测，在速度与精度间取得良好平衡。",
+    "introEn": "Proposes SSD for single-shot multi-scale object detection, achieving a good balance between speed and accuracy."
+  },
+  {
+    "rank": 13,
+    "id": "1506.02640",
+    "tag": "实时检测",
+    "title": "You Only Look Once: Unified, Real-Time Object Detection",
+    "titleZh": "YOLO：统一实时目标检测",
+    "year": "2015",
+    "introZh": "提出 YOLO，将检测视为回归问题，实现端到端实时目标检测，极大提升检测速度。",
+    "introEn": "Introduces YOLO, framing detection as a regression problem for real-time end-to-end detection, dramatically improving speed."
+  },
+  {
+    "rank": 14,
+    "id": "1508.06576",
+    "tag": "风格迁移",
+    "title": "A Neural Algorithm of Artistic Style",
+    "titleZh": "一种艺术风格的神经算法",
+    "year": "2015",
+    "introZh": "提出神经风格迁移，利用卷积网络分离内容与风格，开创了图像风格化领域。",
+    "introEn": "Proposes neural style transfer, using CNNs to separate content and style, pioneering the field of image stylization."
+  },
+  {
+    "rank": 15,
+    "id": "1512.03385",
+    "tag": "残差网络",
+    "title": "Deep Residual Learning for Image Recognition",
+    "titleZh": "用于图像识别的深度残差学习",
+    "year": "2015",
+    "introZh": "提出 ResNet，通过残差连接解决深层网络退化问题，使训练超深网络成为可能。",
+    "introEn": "Introduces ResNet with residual connections to solve degradation in deep networks, enabling training of ultra-deep networks."
+  },
+  {
+    "rank": 16,
+    "id": "1611.07004",
+    "tag": "图像翻译",
+    "title": "Image-to-Image Translation with Conditional Adversarial Networks",
+    "titleZh": "基于条件对抗网络的图像到图像翻译",
+    "year": "2016",
+    "introZh": "提出 Pix2Pix，使用条件 GAN 实现通用图像翻译，统一了多种图像生成任务。",
+    "introEn": "Proposes Pix2Pix, using conditional GANs for general-purpose image-to-image translation, unifying various image generation tasks."
+  },
+  {
+    "rank": 17,
+    "id": "1706.03762",
+    "tag": "Transformer",
+    "title": "Attention Is All You Need",
+    "titleZh": "注意力就是一切",
+    "year": "2017",
+    "introZh": "提出 Transformer，完全基于注意力机制，取代 RNN 成为 NLP 主流架构，是现代大模型的基础。",
+    "introEn": "Introduces Transformer, relying entirely on attention, replacing RNNs as the dominant NLP architecture and foundation of modern LLMs."
+  },
+  {
+    "rank": 18,
+    "id": "1810.04805",
+    "tag": "预训练",
+    "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+    "titleZh": "BERT：深度双向 Transformer 的预训练",
+    "year": "2018",
+    "introZh": "提出 BERT，通过掩码语言模型实现深度双向预训练，刷新多项 NLP 基准。",
+    "introEn": "Proposes BERT with masked language modeling for deep bidirectional pretraining, achieving state-of-the-art on multiple NLP benchmarks."
+  },
+  {
+    "rank": 19,
+    "id": "1812.04948",
+    "tag": "图像生成",
+    "title": "A Style-Based Generator Architecture for Generative Adversarial Networks",
+    "titleZh": "基于风格的生成对抗网络生成器架构",
+    "year": "2018",
+    "introZh": "提出 StyleGAN，通过风格控制实现高质量、可解释的图像生成，是 GAN 图像生成的里程碑。",
+    "introEn": "Introduces StyleGAN, enabling high-quality, interpretable image generation through style control, a milestone in GAN-based generation."
+  },
+  {
+    "rank": 20,
+    "id": "1905.05583",
+    "tag": "预训练",
+    "title": "RoBERTa: A Robustly Optimized BERT Pretraining Approach",
+    "titleZh": "RoBERTa：一种鲁棒优化的 BERT 预训练方法",
+    "year": "2019",
+    "introZh": "提出 RoBERTa，通过更长的训练、更大的数据和动态掩码优化 BERT，提升预训练效果。",
+    "introEn": "Proposes RoBERTa, optimizing BERT with longer training, more data, and dynamic masking, improving pretraining performance."
+  },
+  {
+    "rank": 21,
+    "id": "1909.01066",
+    "tag": "模型蒸馏",
+    "title": "DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter",
+    "titleZh": "DistilBERT：BERT 的蒸馏版本——更小、更快、更便宜、更轻",
+    "year": "2019",
+    "introZh": "提出 DistilBERT，通过知识蒸馏将 BERT 压缩 40%，同时保留 97% 性能，推动模型轻量化。",
+    "introEn": "Introduces DistilBERT, compressing BERT by 40% via knowledge distillation while retaining 97% performance, advancing model compression."
+  },
+  {
+    "rank": 22,
+    "id": "1910.10683",
+    "tag": "统一框架",
+    "title": "Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer",
+    "titleZh": "探索统一文本到文本 Transformer 的迁移学习极限",
+    "year": "2019",
+    "introZh": "提出 T5，将所有 NLP 任务统一为文本到文本格式，展示了大规模预训练的通用性。",
+    "introEn": "Proposes T5, unifying all NLP tasks into a text-to-text format, demonstrating the versatility of large-scale pretraining."
+  },
+  {
+    "rank": 23,
+    "id": "1911.05722",
+    "tag": "自监督",
+    "title": "Momentum Contrast for Unsupervised Visual Representation Learning",
+    "titleZh": "用于无监督视觉表示学习的动量对比",
+    "year": "2019",
+    "introZh": "提出 MoCo，利用动量编码器和动态字典实现高效无监督对比学习，推动自监督视觉发展。",
+    "introEn": "Introduces MoCo, using momentum encoder and dynamic dictionary for efficient unsupervised contrastive learning, advancing self-supervised vision."
+  },
+  {
+    "rank": 24,
+    "id": "2001.07676",
+    "tag": "缩放定律",
+    "title": "Scaling Laws for Neural Language Models",
+    "titleZh": "神经语言模型的缩放定律",
+    "year": "2020",
+    "introZh": "提出缩放定律，揭示模型性能随参数、数据和计算量呈幂律增长，指导大模型设计。",
+    "introEn": "Proposes scaling laws, showing model performance follows power-law growth with parameters, data, and compute, guiding LLM design."
+  },
+  {
+    "rank": 25,
+    "id": "2003.08934",
+    "tag": "神经渲染",
+    "title": "NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis",
+    "titleZh": "NeRF：将场景表示为神经辐射场用于视图合成",
+    "year": "2020",
+    "introZh": "提出 NeRF，用神经网络隐式表示 3D 场景，实现高质量新视角合成，革新神经渲染。",
+    "introEn": "Introduces NeRF, using neural networks for implicit 3D scene representation, enabling high-quality novel view synthesis, revolutionizing neural rendering."
+  },
+  {
+    "rank": 26,
+    "id": "2005.11401",
+    "tag": "检索增强",
+    "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+    "titleZh": "面向知识密集型 NLP 任务的检索增强生成",
+    "year": "2020",
+    "introZh": "提出 RAG，结合检索与生成，利用外部知识提升语言模型在知识密集型任务上的表现。",
+    "introEn": "Proposes RAG, combining retrieval with generation to leverage external knowledge, improving LLM performance on knowledge-intensive tasks."
+  },
+  {
+    "rank": 27,
+    "id": "2005.14165",
+    "tag": "大模型",
+    "title": "Language Models are Few-Shot Learners",
+    "titleZh": "语言模型是小样本学习者",
+    "year": "2020",
+    "introZh": "提出 GPT-3，展示大规模语言模型通过上下文学习即可完成多种任务，无需微调。",
+    "introEn": "Introduces GPT-3, demonstrating that large language models can perform diverse tasks via in-context learning without fine-tuning."
+  },
+  {
+    "rank": 28,
+    "id": "2006.11239",
+    "tag": "扩散模型",
+    "title": "Denoising Diffusion Probabilistic Models",
+    "titleZh": "去噪扩散概率模型",
+    "year": "2020",
+    "introZh": "提出 DDPM，通过逐步去噪生成高质量数据，奠定了现代扩散模型的理论基础。",
+    "introEn": "Proposes DDPM, generating high-quality data through iterative denoising, laying the theoretical foundation for modern diffusion models."
+  },
+  {
+    "rank": 29,
+    "id": "2010.11929",
+    "tag": "视觉 Transformer",
+    "title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",
+    "titleZh": "一张图像等于 16x16 个词：用于大规模图像识别的 Transformer",
+    "year": "2020",
+    "introZh": "提出 ViT，将图像分割为块并应用 Transformer，证明纯注意力机制在视觉任务上的有效性。",
+    "introEn": "Introduces ViT, applying Transformers to image patches, demonstrating the effectiveness of pure attention in vision tasks."
+  },
+  {
+    "rank": 30,
+    "id": "2103.00020",
+    "tag": "多模态",
+    "title": "Learning Transferable Visual Models From Natural Language Supervision",
+    "titleZh": "从自然语言监督中学习可迁移的视觉模型",
+    "year": "2021",
+    "introZh": "提出 CLIP，通过图文对比学习实现零样本迁移，连接视觉与语言，推动多模态发展。",
+    "introEn": "Proposes CLIP, using image-text contrastive learning for zero-shot transfer, bridging vision and language, advancing multimodal AI."
+  },
+  {
+    "rank": 31,
+    "id": "2103.14030",
+    "tag": "视觉骨干",
+    "title": "Swin Transformer: Hierarchical Vision Transformer using Shifted Windows",
+    "titleZh": "Swin Transformer：使用移位窗口的分层视觉 Transformer",
+    "year": "2021",
+    "introZh": "提出 Swin Transformer，通过移位窗口实现分层特征提取，成为视觉骨干网络的新范式。",
+    "introEn": "Introduces Swin Transformer with shifted windows for hierarchical feature extraction, becoming a new paradigm for vision backbones."
+  },
+  {
+    "rank": 32,
+    "id": "2106.09685",
+    "tag": "参数高效微调",
+    "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+    "titleZh": "LoRA：大语言模型的低秩适应",
+    "year": "2021",
+    "introZh": "提出 LoRA，通过低秩矩阵微调大模型，大幅降低参数量和计算成本，成为参数高效微调标准。",
+    "introEn": "Proposes LoRA, fine-tuning large models via low-rank matrices, drastically reducing parameters and compute, becoming a standard for PEFT."
+  },
+  {
+    "rank": 33,
+    "id": "2112.10752",
+    "tag": "文生图",
+    "title": "High-Resolution Image Synthesis with Latent Diffusion Models",
+    "titleZh": "基于潜在扩散模型的高分辨率图像合成",
+    "year": "2021",
+    "introZh": "提出 Latent Diffusion，在潜在空间进行扩散生成，实现高效高分辨率文生图，是 Stable Diffusion 的基础。",
+    "introEn": "Introduces Latent Diffusion, performing diffusion in latent space for efficient high-resolution text-to-image generation, basis of Stable Diffusion."
+  },
+  {
+    "rank": 34,
+    "id": "2201.11903",
+    "tag": "缩放定律",
+    "title": "Training Compute-Optimal Large Language Models",
+    "titleZh": "训练计算最优的大语言模型",
+    "year": "2022",
+    "introZh": "提出 Chinchilla 缩放定律，发现模型和数据应等比例缩放，指导大模型训练的资源分配。",
+    "introEn": "Proposes Chinchilla scaling laws, showing model and data should scale equally, guiding resource allocation for LLM training."
+  },
+  {
+    "rank": 35,
+    "id": "2203.02155",
+    "tag": "指令对齐",
+    "title": "Training language models to follow instructions with human feedback",
+    "titleZh": "通过人类反馈训练语言模型遵循指令",
+    "year": "2022",
+    "introZh": "提出 InstructGPT，使用人类反馈强化学习（RLHF）对齐模型，使语言模型更好地遵循用户指令。",
+    "introEn": "Introduces InstructGPT, using RLHF to align language models with human intent, enabling better instruction following."
+  },
+  {
+    "rank": 36,
+    "id": "2204.02311",
+    "tag": "大模型",
+    "title": "PaLM: Scaling Language Modeling with Pathways",
+    "titleZh": "PaLM：使用 Pathways 扩展语言建模",
+    "year": "2022",
+    "introZh": "提出 PaLM，基于 Pathways 系统训练 5400 亿参数模型，展示大规模稀疏激活的有效性。",
+    "introEn": "Proposes PaLM, a 540B-parameter model trained on Pathways, demonstrating the effectiveness of large-scale sparse activation."
+  },
+  {
+    "rank": 37,
+    "id": "2205.14135",
+    "tag": "高效注意力",
+    "title": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness",
+    "titleZh": "FlashAttention：快速且内存高效的 IO 感知精确注意力",
+    "year": "2022",
+    "introZh": "提出 FlashAttention，通过 IO 感知算法加速注意力计算，显著提升 Transformer 训练和推理效率。",
+    "introEn": "Introduces FlashAttention, an IO-aware algorithm accelerating attention computation, significantly improving Transformer training and inference efficiency."
+  },
+  {
+    "rank": 38,
+    "id": "2208.12242",
+    "tag": "个性化生成",
+    "title": "DreamBooth: Fine Tuning Text-to-Image Diffusion Models for Subject-Driven Generation",
+    "titleZh": "DreamBooth：面向主体驱动的文本到图像扩散模型微调",
+    "year": "2022",
+    "introZh": "提出 DreamBooth，通过少量图像微调扩散模型，实现个性化主体生成，推动定制化文生图。",
+    "introEn": "Proposes DreamBooth, fine-tuning diffusion models with few images for personalized subject generation, advancing customized text-to-image."
+  },
+  {
+    "rank": 39,
+    "id": "2210.03629",
+    "tag": "智能体",
+    "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+    "titleZh": "ReAct：在语言模型中协同推理与行动",
+    "year": "2022",
+    "introZh": "提出 ReAct，结合推理轨迹与行动步骤，增强语言模型在交互任务中的决策能力。",
+    "introEn": "Introduces ReAct, combining reasoning traces with action steps, enhancing LLM decision-making in interactive tasks."
+  },
+  {
+    "rank": 40,
+    "id": "2210.11416",
+    "tag": "指令微调",
+    "title": "Scaling Instruction-Finetuned Language Models",
+    "titleZh": "扩展指令微调的语言模型",
+    "year": "2022",
+    "introZh": "提出 Flan 系列，通过大规模指令微调提升模型泛化能力，验证了指令数据的缩放效应。",
+    "introEn": "Proposes Flan series, scaling instruction fine-tuning to improve generalization, validating the scaling effect of instruction data."
+  },
+  {
+    "rank": 41,
+    "id": "2212.10560",
+    "tag": "指令数据",
+    "title": "Self-Instruct: Aligning Language Models with Self-Generated Instructions",
+    "titleZh": "Self-Instruct：用自生成指令对齐语言模型",
+    "year": "2022",
+    "introZh": "提出 Self-Instruct，通过模型自生成指令数据实现对齐，降低对人工标注的依赖。",
+    "introEn": "Introduces Self-Instruct, aligning language models using self-generated instruction data, reducing reliance on human annotation."
+  },
+  {
+    "rank": 42,
+    "id": "2302.13971",
+    "tag": "开源大模型",
+    "title": "LLaMA: Open and Efficient Foundation Language Models",
+    "titleZh": "LLaMA：开放高效的基础语言模型",
+    "year": "2023",
+    "introZh": "提出 LLaMA，通过仅使用公开数据训练高性能模型，推动开源大模型生态发展。",
+    "introEn": "Proposes LLaMA, training high-performance models on public data only, advancing the open-source LLM ecosystem."
+  },
+  {
+    "rank": 43,
+    "id": "2303.08774",
+    "tag": "前沿大模型",
+    "title": "GPT-4 Technical Report",
+    "titleZh": "GPT-4 技术报告",
+    "year": "2023",
+    "introZh": "发布 GPT-4，展示多模态能力和接近人类水平的性能，是前沿大模型的代表。",
+    "introEn": "Releases GPT-4, demonstrating multimodal capabilities and near-human performance, representing the frontier of large models."
+  },
+  {
+    "rank": 44,
+    "id": "2303.11366",
+    "tag": "分割万物",
+    "title": "Segment Anything",
+    "titleZh": "分割万物",
+    "year": "2023",
+    "introZh": "提出 SAM，通过提示实现通用图像分割，零样本迁移到新任务，是分割领域的里程碑。",
+    "introEn": "Introduces SAM, enabling prompt-based universal image segmentation with zero-shot transfer, a milestone in segmentation."
+  },
+  {
+    "rank": 45,
+    "id": "2305.10601",
+    "tag": "推理框架",
+    "title": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models",
+    "titleZh": "思维树：用大语言模型进行深思熟虑的问题求解",
+    "year": "2023",
+    "introZh": "提出 Tree of Thoughts，扩展思维链为树状搜索，提升语言模型在复杂推理任务上的表现。",
+    "introEn": "Proposes Tree of Thoughts, extending chain-of-thought to tree search, improving LLM performance on complex reasoning tasks."
+  },
+  {
+    "rank": 46,
+    "id": "2305.16316",
+    "tag": "量化微调",
+    "title": "QLoRA: Efficient Finetuning of Quantized LLMs",
+    "titleZh": "QLoRA：量化 LLM 的高效微调",
+    "year": "2023",
+    "introZh": "提出 QLoRA，结合量化与 LoRA，在 4-bit 精度下高效微调大模型，降低硬件门槛。",
+    "introEn": "Introduces QLoRA, combining quantization with LoRA for efficient 4-bit fine-tuning of large models, lowering hardware requirements."
+  },
+  {
+    "rank": 47,
+    "id": "2305.18290",
+    "tag": "偏好优化",
+    "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+    "titleZh": "直接偏好优化：你的语言模型秘密地是一个奖励模型",
+    "year": "2023",
+    "introZh": "提出 DPO，直接从偏好数据优化语言模型，简化 RLHF 流程，提升对齐效率。",
+    "introEn": "Proposes DPO, directly optimizing language models from preference data, simplifying RLHF and improving alignment efficiency."
+  },
+  {
+    "rank": 48,
+    "id": "2312.00752",
+    "tag": "状态空间模型",
+    "title": "Mamba: Linear-Time Sequence Modeling with Selective State Spaces",
+    "titleZh": "Mamba：基于选择性状态空间的线性时间序列建模",
+    "year": "2023",
+    "introZh": "提出 Mamba，引入选择性状态空间模型，实现线性时间序列建模，挑战 Transformer 的主导地位。",
+    "introEn": "Introduces Mamba, using selective state space models for linear-time sequence modeling, challenging Transformer dominance."
+  },
+  {
+    "rank": 49,
+    "id": "2401.04088",
+    "tag": "混合专家",
+    "title": "Mixtral of Experts",
+    "titleZh": "Mixtral of Experts",
+    "year": "2024",
+    "introZh": "提出 Mixtral 8x7B，采用混合专家架构，在保持推理效率的同时提升模型容量和性能。",
+    "introEn": "Proposes Mixtral 8x7B, using mixture-of-experts architecture to increase model capacity and performance while maintaining inference efficiency."
+  },
+  {
+    "rank": 50,
+    "id": "2501.12948",
+    "tag": "推理大模型",
+    "title": "DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning",
+    "titleZh": "DeepSeek-R1：通过强化学习激励 LLM 的推理能力",
+    "year": "2025",
+    "introZh": "提出 DeepSeek-R1，通过强化学习激发语言模型的推理能力，实现类似 o1 的深度思考。",
+    "introEn": "Introduces DeepSeek-R1, using reinforcement learning to incentivize reasoning in LLMs, achieving deep thinking similar to o1."
+  }
+]

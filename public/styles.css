@@ -1006,7 +1006,205 @@ p { text-wrap: pretty; }
   .back-link:hover { color: var(--accent); }
 }
 
-/* ---------- 响应式 ---------- */
+/* ---------- 经典论文时间线 ---------- */
+
+.classics-timeline { display: flex; flex-direction: column; gap: 36px; }
+
+.classics-year {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 24px;
+}
+
+.year-marker {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink-3);
+  padding-top: 18px;
+  text-align: right;
+  position: sticky;
+  top: calc(var(--header-h) + 16px);
+}
+
+.year-papers { border-top: 1px solid var(--border-strong); }
+
+.classic-row {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  gap: 8px 16px;
+  padding: 18px 4px;
+  border-bottom: 1px solid var(--border);
+  align-items: start;
+}
+
+.classic-rank {
+  font-size: 13px;
+  color: var(--accent);
+  background: var(--accent-tint);
+  border-radius: 6px;
+  padding: 2px 0;
+  text-align: center;
+  margin-top: 3px;
+}
+
+.classic-title-en {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 17.5px;
+  line-height: 1.35;
+  margin: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .classic-row a:hover .classic-title-en { color: var(--accent); }
+}
+
+.classic-title-zh {
+  font-size: 14px;
+  color: var(--ink);
+  margin: 3px 0 0;
+  font-weight: 500;
+}
+
+.classic-intro-zh {
+  font-size: 13.5px;
+  color: var(--ink-2);
+  margin: 8px 0 0;
+  line-height: 1.7;
+  max-width: 72ch;
+}
+
+.classic-intro-en {
+  font-size: 12.5px;
+  color: var(--ink-3);
+  margin: 4px 0 0;
+  line-height: 1.65;
+  max-width: 72ch;
+}
+
+.classic-row .row-meta { margin-top: 10px; }
+
+/* ---------- 搜索下载 ---------- */
+
+.discover-hero {
+  max-width: 760px;
+  margin: 24px auto 40px;
+  text-align: center;
+}
+
+.discover-title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(30px, 4vw, 44px);
+  margin: 0 0 12px;
+  letter-spacing: -0.01em;
+}
+
+.discover-sub {
+  color: var(--ink-2);
+  font-size: 15px;
+  margin: 0 auto 24px;
+}
+
+.discover-form {
+  display: flex;
+  gap: 10px;
+}
+
+.discover-form input {
+  flex: 1;
+  font: inherit;
+  font-size: 16.5px;
+  padding: 14px 18px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-btn);
+  background: var(--surface);
+  color: var(--ink);
+  outline: none;
+  min-width: 0;
+  transition: border-color 140ms var(--ease-out), box-shadow 140ms var(--ease-out);
+}
+
+.discover-form input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-tint);
+}
+
+.discover-form .btn-primary { padding: 14px 24px; font-size: 15px; white-space: nowrap; }
+
+.suggestion-rotate {
+  margin-top: 18px;
+  font-size: 14px;
+  color: var(--ink-2);
+  min-height: 26px;
+}
+
+.suggestion-prefix { color: var(--ink-3); }
+
+.suggestion-text {
+  color: var(--accent);
+  border-bottom: 1px dashed var(--accent);
+  padding: 0 2px 1px;
+  font-size: 14px;
+  transition: color 140ms var(--ease-out);
+}
+
+.suggestion-text.swap { animation: swapIn 420ms var(--ease-out) both; }
+
+@keyframes swapIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .suggestion-text:hover { color: var(--accent-deep); }
+}
+
+.suggestion-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+.discover-thinking {
+  text-align: center;
+  color: var(--ink-3);
+  font-size: 13.5px;
+  padding: 12px 0;
+}
+
+.discover-plan {
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.plan-note {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.plan-note::before {
+  content: "✦ ";
+  color: var(--accent);
+}
+
+.plan-terms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.paper-title-en {
+  font-size: 13px;
+  color: var(--ink-3);
+  margin: 2px 0 0;
+  line-height: 1.5;
+}
 
 @media (max-width: 900px) {
   .paper-body { grid-template-columns: 1fr; }
@@ -1029,6 +1227,22 @@ p { text-wrap: pretty; }
   .section-head { flex-direction: column; align-items: flex-start; gap: 4px; }
   .section-head .note { text-align: left; }
   .footer-inner > :last-child { margin-left: 0; }
+  .classics-timeline { gap: 24px; }
+  .classics-year { grid-template-columns: 1fr; gap: 8px; }
+  .year-marker {
+    position: static;
+    text-align: left;
+    padding-top: 0;
+    font-size: 18px;
+  }
+  .classic-row { grid-template-columns: 38px minmax(0, 1fr); }
+  .classic-row .row-actions {
+    grid-column: 2;
+    justify-content: flex-start;
+  }
+  .discover-hero { margin: 8px auto 28px; }
+  .discover-form { flex-direction: column; }
+  .discover-form .btn-primary { width: 100%; }
 }
 
 @media (max-width: 480px) {

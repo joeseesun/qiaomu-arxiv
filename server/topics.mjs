@@ -106,6 +106,28 @@ export const categoryFilters = [
   { id: "q-bio.BM", name: "生物分子" }
 ];
 
+// 搜索下载页的轮播搜索词：用户视角的自然语言问句。
+export const discoverSuggestions = [
+  "我想搞懂大模型是怎么学会推理的",
+  "找几篇讲 RAG 检索增强的论文",
+  "视频生成最近有什么突破",
+  "怎么把大模型部署到手机上",
+  "扩散模型的原理，和 GAN 比哪个好",
+  "多模态大模型是怎么看懂图片的",
+  "AI Agent 智能体方向的综述",
+  "长上下文窗口有哪些新架构",
+  "LoRA 微调的原理和效果",
+  "具身智能和机器人方向看什么",
+  "大模型安全与对齐问题",
+  "Mamba 和 Transformer 有什么区别",
+  "小模型怎么蒸馏大模型",
+  "AI 怎么预测蛋白质结构",
+  "代码生成模型是怎么训练的",
+  "混合专家模型 MoE 为什么快",
+  "大模型的幻觉问题怎么缓解",
+  "RLHF 人类反馈强化学习"
+];
+
 export function getTopic(id) {
   return topics.find((topic) => topic.id === id) || null;
 }

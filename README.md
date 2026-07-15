@@ -8,6 +8,8 @@
 
 - **今日精选**：DeepSeek 每天从最新提交中挑出 6 篇值得读的论文，附中文看点与推荐理由（24 小时缓存）
 - **主题策展**：12 个手工调过的研究方向（LLM 智能体、推理与思维链、扩散模型、视频生成、多模态、RAG、高效推理、具身智能、AI 安全、AI for Science、代码生成、长上下文），每个主题背后是精确的 arXiv 检索式
+- **经典论文**：AI 发展史上最重要的 50 篇论文（word2vec → Transformer → 推理大模型），按年份时间线排列，标题与简介中英双语对照（DeepSeek 编译，数据静态内置）
+- **搜索下载**：用人话描述需求，DeepSeek 理解意图后生成检索式查询 arXiv，结果标题自动翻译成中文；搜索框下方搜索词每 5 秒轮播，点击即搜
 - **全文搜索**：关键词 / 作者 / 分类筛选 / 相关度与最新排序，输入 arXiv ID 直达论文页
 - **一键阅读**：下载 PDF、arXiv 页面、HTML 全文三个入口
 - **AI 解读**：基于摘要的流式中文解读（讲了什么 / 为什么值得看 / 方法速览 / 适合谁读 / 局限），结果落盘缓存，二次打开秒出
@@ -50,11 +52,14 @@ server/
   index.mjs    # HTTP 服务、路由、AI 限流、SSE
   arxiv.mjs    # arXiv API 客户端、Atom 解析、限速队列、磁盘缓存
   ai.mjs       # DeepSeek：解读 / 追问 / 每日精选生成
-  topics.mjs   # 主题策展与分类筛选配置
+  discover.mjs # 搜索下载：意图理解 + 检索 + 标题翻译
+  classics.mjs # 经典论文 50 篇静态数据读取
+  topics.mjs   # 主题策展、分类筛选、搜索词轮播配置
   seo.mjs      # meta 注入、sitemap、robots
   config.mjs   # 环境变量与 .env.local 加载
+  data/        # classics-seed.json（种子）与 classics.json（生成结果，提交入库）
 public/        # 前端三件套（index.html / styles.css / app.js）
-scripts/       # check / warm-featured
+scripts/       # check / warm-featured / generate-classics
 ```
 
 ## 部署

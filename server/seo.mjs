@@ -54,6 +54,20 @@ async function metaForPath(pathname) {
   if (pathname.startsWith("/search")) {
     return { ...base, title: "搜索论文 · 乔木 arXiv", path: "/search" };
   }
+  if (pathname.startsWith("/classics")) {
+    return {
+      title: "经典论文 50 篇 · AI 发展史上的里程碑 · 乔木 arXiv",
+      description: "AI 发展历史上最重要的 50 篇论文：Transformer、BERT、GPT、ResNet、GAN、扩散模型……标题与简介双语对照，一键下载 PDF 与 AI 中文解读。",
+      path: "/classics"
+    };
+  }
+  if (pathname.startsWith("/discover")) {
+    return {
+      title: "搜索下载 · 用人话找论文 · 乔木 arXiv",
+      description: "用中文自然语言描述你想看的方向，AI 理解后检索最合适的 arXiv 论文，标题自动翻译成中文，一键下载 PDF。",
+      path: "/discover"
+    };
+  }
   return base;
 }
 
@@ -82,6 +96,8 @@ export async function sitemapXml() {
   const { topics } = await import("./topics.mjs");
   const urls = [
     { loc: "/", priority: "1.0" },
+    { loc: "/classics", priority: "0.8" },
+    { loc: "/discover", priority: "0.8" },
     ...topics.map((topic) => ({ loc: `/topic/${topic.id}`, priority: "0.7" }))
   ];
   return `<?xml version="1.0" encoding="UTF-8"?>

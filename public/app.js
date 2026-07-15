@@ -202,11 +202,15 @@ function skeletonRows(count = 5) {
     .join("")}</div>`;
 }
 
-function paperRow(paper, index = 0) {
+function paperRow(paper, index = 0, { bilingual = false } = {}) {
+  const titleHtml =
+    bilingual && paper.titleZh
+      ? `<h3 class="paper-title">${esc(paper.titleZh)}</h3><p class="paper-title-en">${esc(paper.title)}</p>`
+      : `<h3 class="paper-title">${esc(paper.title)}</h3>`;
   return `
     <div class="paper-row" style="animation-delay:${Math.min(index, 10) * 45}ms">
       <div>
-        <a href="${paperUrl(paper.id)}" data-link><h3 class="paper-title">${esc(paper.title)}</h3></a>
+        <a href="${paperUrl(paper.id)}" data-link>${titleHtml}</a>
         <p class="authors">${authorsLine(paper)}</p>
         <p class="summary">${esc(paper.summary)}</p>
         ${paper.comment ? `<p class="comment">备注：${esc(paper.comment)}</p>` : ""}
@@ -685,6 +689,185 @@ async function renderPaper(id) {
   });
 }
 
+// ---------- 经典论文 ----------
+
+async function renderClassics() {
+  document.title = "经典论文 50 篇 · AI 发展史上的里程碑 · 乔木 arXiv";
+  pageLoading();
+  try {
+    const { classics } = await api("/api/classics");
+    const byYear = new Map();
+    for (const item of classics) {
+      if (!byYear.has(item.year)) byYear.set(item.year, []);
+      byYear.get(item.year).push(item);
+    }
+    const years = [...byYear.keys()].sort();
+
+    app.innerHTML = `
+      <div class="topic-head">
+        <h1>经典论文 50 篇</h1>
+        <p>AI 发展史上的里程碑，从 word2vec 到推理大模型。标题与简介双语对照，由 DeepSeek 编译。</p>
+      </div>
+      <div class="classics-timeline">
+        ${years
+          .map(
+            (year) => `
+          <section class="classics-year">
+            <div class="year-marker mono">${esc(year)}</div>
+            <div class="year-papers">
+              ${byYear
+                .get(year)
+                .map(
+                  (item) => `
+                <div class="classic-row">
+                  <span class="classic-rank mono">${String(item.rank).padStart(2, "0")}</span>
+                  <div class="classic-main">
+                    <div class="classic-titles">
+                      <a href="${paperUrl(item.id)}" data-link><h3 class="classic-title-en">${esc(item.title)}</h3></a>
+                      ${item.titleZh ? `<p class="classic-title-zh">${esc(item.titleZh)}</p>` : ""}
+                    </div>
+                    ${item.introZh ? `<p class="classic-intro-zh">${esc(item.introZh)}</p>` : ""}
+                    ${item.introEn ? `<p class="classic-intro-en">${esc(item.introEn)}</p>` : ""}
+                    <div class="row-meta">
+                      ${idChip(item.id)}
+                      ${catTag(item.primaryCategory)}
+                      <span class="cat-tag">${esc(item.tag)}</span>
+                    </div>
+                  </div>
+                  <div class="row-actions">
+                    <a class="btn btn-sm" href="https://arxiv.org/pdf/${esc(item.id)}" target="_blank" rel="noopener" title="下载 PDF">PDF</a>
+                    <a class="btn btn-sm" href="${paperUrl(item.id)}" data-link>详情</a>
+                  </div>
+                </div>`
+                )
+                .join("")}
+            </div>
+          </section>`
+          )
+          .join("")}
+      </div>`;
+  } catch (error) {
+    renderError(error.message, renderClassics);
+  }
+}
+
+// ---------- 搜索下载 ----------
+
+let suggestionTimer = null;
+
+function stopSuggestionTimer() {
+  if (suggestionTimer) {
+    clearInterval(suggestionTimer);
+    suggestionTimer = null;
+  }
+}
+
+async function renderDiscover() {
+  document.title = "搜索下载 · 用人话找论文 · 乔木 arXiv";
+  stopSuggestionTimer();
+  const prefill = new URLSearchParams(location.search).get("q") || "";
+
+  app.innerHTML = `
+    <div class="discover-hero">
+      <h1 class="discover-title">用人话找论文</h1>
+      <p class="discover-sub">描述你想了解的方向，AI 理解你的意图后检索最合适的论文，标题自动翻译成中文。</p>
+      <form class="discover-form" id="discoverForm" role="search">
+        <input type="search" name="q" value="${esc(prefill)}" placeholder="例如：我想搞懂大模型是怎么学会推理的" autofocus aria-label="描述你想找的论文">
+        <button class="btn btn-primary" type="submit">搜索下载</button>
+      </form>
+      <div class="suggestion-rotate" id="suggestionRotate" hidden>
+        <span class="suggestion-prefix">试试：</span><button type="button" class="suggestion-text" id="suggestionText"></button>
+      </div>
+      <div class="suggestion-chips" id="suggestionChips"></div>
+    </div>
+    <div id="discoverResults"></div>`;
+
+  const resultsEl = document.getElementById("discoverResults");
+  const form = document.getElementById("discoverForm");
+  const input = form.elements.q;
+
+  async function runDiscover(q) {
+    const question = q.trim();
+    if (!question) return;
+    if (location.pathname !== "/discover" || new URLSearchParams(location.search).get("q") !== question) {
+      history.replaceState({}, "", `/discover?q=${encodeURIComponent(question)}`);
+    }
+    stopSuggestionTimer();
+    const rotateEl = document.getElementById("suggestionRotate");
+    if (rotateEl) rotateEl.hidden = true;
+    resultsEl.innerHTML = `<p class="discover-thinking">AI 正在理解你的问题并检索 arXiv…</p>${skeletonRows(4)}`;
+    try {
+      const data = await api("/api/discover", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ q: question })
+      });
+      const termsLine = data.terms
+        .map((t) => `<span class="cat-tag">${esc(t)}</span>`)
+        .join("");
+      resultsEl.innerHTML = `
+        <div class="discover-plan">
+          ${data.note ? `<p class="plan-note">${esc(data.note)}</p>` : ""}
+          <div class="plan-terms">${termsLine}${data.cat ? `<span class="cat-tag">${esc(data.cat)}</span>` : ""}<span class="result-count" style="margin:0">找到 <strong class="mono">${data.total.toLocaleString()}</strong> 篇</span></div>
+        </div>
+        ${
+          data.papers.length
+            ? `<div class="paper-list">${data.papers.map((p, i) => paperRow(p, i, { bilingual: true })).join("")}</div>`
+            : `<div class="empty-state"><p class="big">没有检索到结果</p><p>换个说法试试，比如加上更具体的方向或方法名。</p></div>`
+        }`;
+    } catch (error) {
+      resultsEl.innerHTML = `<div class="error-state"><p class="big">检索失败</p><p>${esc(error.message)}</p></div>`;
+    }
+  }
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    runDiscover(input.value);
+  });
+
+  // 轮播搜索词：每 5 秒换一条，点击自动搜索
+  try {
+    const { suggestions } = await api("/api/discover/suggestions");
+    const rotateEl = document.getElementById("suggestionRotate");
+    const textBtn = document.getElementById("suggestionText");
+    const chipsEl = document.getElementById("suggestionChips");
+    let cursor = Math.floor(Math.random() * suggestions.length);
+
+    const show = () => {
+      textBtn.textContent = suggestions[cursor % suggestions.length];
+      textBtn.classList.remove("swap");
+      requestAnimationFrame(() => textBtn.classList.add("swap"));
+    };
+    rotateEl.hidden = false;
+    show();
+    textBtn.addEventListener("click", () => {
+      input.value = textBtn.textContent;
+      runDiscover(textBtn.textContent);
+    });
+    rotateEl.addEventListener("mouseenter", stopSuggestionTimer);
+    suggestionTimer = setInterval(() => {
+      cursor += 1;
+      show();
+    }, 5000);
+
+    // 静态快捷 chips（取前 6 条，不与轮播当前项重复也没关系）
+    chipsEl.innerHTML = suggestions
+      .slice(0, 6)
+      .map((s) => `<button type="button" class="chip" data-suggestion="${esc(s)}">${esc(s)}</button>`)
+      .join("");
+    chipsEl.querySelectorAll("[data-suggestion]").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        input.value = chip.dataset.suggestion;
+        runDiscover(chip.dataset.suggestion);
+      });
+    });
+  } catch {
+    // 建议词加载失败不影响搜索
+  }
+
+  if (prefill) runDiscover(prefill);
+}
+
 // ---------- 收藏页 ----------
 
 async function renderFavorites() {
@@ -723,12 +906,15 @@ const routes = [
   { pattern: /^\/$/, render: renderHome, nav: "home" },
   { pattern: /^\/topics\/?$/, render: renderTopics, nav: "topics" },
   { pattern: /^\/topic\/([\w-]+)\/?$/, render: (m) => renderTopicDetail(m[1]), nav: "topics" },
+  { pattern: /^\/classics\/?$/, render: renderClassics, nav: "classics" },
+  { pattern: /^\/discover\/?$/, render: renderDiscover, nav: "discover" },
   { pattern: /^\/search\/?$/, render: renderSearch, nav: null },
   { pattern: /^\/paper\/(.+?)\/?$/, render: (m) => renderPaper(decodeURIComponent(m[1])), nav: null },
   { pattern: /^\/favorites\/?$/, render: renderFavorites, nav: "favorites" }
 ];
 
 function route() {
+  stopSuggestionTimer();
   const path = location.pathname;
   for (const r of routes) {
     const match = path.match(r.pattern);
