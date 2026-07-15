@@ -17,7 +17,7 @@ function enqueueFetch(url) {
     lastFetchAt = Date.now();
     const res = await fetch(url, {
       headers: { "User-Agent": "qiaomu-arxiv/0.1 (https://arxiv.qiaomu.ai)" },
-      signal: AbortSignal.timeout(20000)
+      signal: AbortSignal.timeout(35000)
     });
     if (!res.ok) throw new Error(`arxiv_http_${res.status}`);
     return res.text();
