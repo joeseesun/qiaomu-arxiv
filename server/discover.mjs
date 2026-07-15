@@ -132,30 +132,40 @@ export async function discover(q) {
 
   const key = createHash("sha1").update(question).digest("hex");
   const file = path.join(discoverDir, `${key}.json`);
+  let stale;
+  let hasStale = false;
   try {
     const cached = JSON.parse(await readFile(file, "utf8"));
     if (cached.expires > Date.now()) return cached.data;
+    stale = cached.data;
+    hasStale = true;
   } catch {
     // miss
   }
 
-  const plan = await interpret(question);
-  const searchQuery =
-    plan.terms.map((t) => (t.includes(" ") ? `all:"${t}"` : `all:${t}`)).join(" AND ") +
-    (plan.cat ? ` AND cat:${plan.cat}` : "");
-  const { entries, total } = await searchPapers({ q: plan.terms.join(" "), cat: plan.cat, sort: "relevance", max: 20 });
-  const papers = await translateTitles(entries);
-  const data = {
-    question,
-    note: plan.note,
-    terms: plan.terms,
-    cat: plan.cat,
-    queryUsed: searchQuery,
-    total,
-    papers
-  };
+  try {
+    const plan = await interpret(question);
+    const searchQuery =
+      plan.terms.map((t) => (t.includes(" ") ? `all:"${t}"` : `all:${t}`)).join(" AND ") +
+      (plan.cat ? ` AND cat:${plan.cat}` : "");
+    const { entries, total } = await searchPapers({ q: plan.terms.join(" "), cat: plan.cat, sort: "relevance", max: 20 });
+    const papers = await translateTitles(entries);
+    const data = {
+      question,
+      note: plan.note,
+      terms: plan.terms,
+      cat: plan.cat,
+      queryUsed: searchQuery,
+      total,
+      papers
+    };
 
-  await mkdir(discoverDir, { recursive: true });
-  await writeFile(file, JSON.stringify({ expires: Date.now() + DISCOVER_TTL_MS, data }), "utf8").catch(() => {});
-  return data;
+    await mkdir(discoverDir, { recursive: true });
+    await writeFile(file, JSON.stringify({ expires: Date.now() + DISCOVER_TTL_MS, data }), "utf8").catch(() => {});
+    return data;
+  } catch (error) {
+    // 兜底：检索失败时返回过期缓存
+    if (hasStale) return stale;
+    throw error;
+  }
 }

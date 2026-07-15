@@ -19,7 +19,9 @@ const USER_AGENTS = [
   "qiaomu-arxiv/0.1 (+https://arxiv.qiaomu.ai)",
   "Mozilla/5.0 (compatible; qiaomu-arxiv/0.1; +https://arxiv.qiaomu.ai)",
   "qiaomu-arxiv/0.1 (paper discovery; +https://arxiv.qiaomu.ai)",
-  "qiaomu-arxiv/0.1 (+https://arxiv.qiaomu.ai; feed client)"
+  "qiaomu-arxiv/0.1 (+https://arxiv.qiaomu.ai; feed client)",
+  "qiaomu-arxiv/0.1 (research tool; +https://arxiv.qiaomu.ai)",
+  "qiaomu-arxiv/0.1 (+https://arxiv.qiaomu.ai; api client)"
 ];
 let uaCursor = Math.floor(Math.random() * USER_AGENTS.length);
 
@@ -74,18 +76,28 @@ function cachePath(key, ttlMs) {
 
 async function cachedJson(key, ttlMs, producer) {
   const { file } = cachePath(key, ttlMs);
+  let stale;
+  let hasStale = false;
   try {
     const raw = JSON.parse(await readFile(file, "utf8"));
     if (raw.expires > Date.now()) return raw.data;
+    stale = raw.data;
+    hasStale = true;
   } catch {
     // miss
   }
   if (inflight.has(key)) return inflight.get(key);
   const promise = (async () => {
-    const data = await producer();
-    await mkdir(cacheDir, { recursive: true });
-    await writeFile(file, JSON.stringify({ expires: Date.now() + ttlMs, data }), "utf8").catch(() => {});
-    return data;
+    try {
+      const data = await producer();
+      await mkdir(cacheDir, { recursive: true });
+      await writeFile(file, JSON.stringify({ expires: Date.now() + ttlMs, data }), "utf8").catch(() => {});
+      return data;
+    } catch (error) {
+      // 兜底：arXiv 限流/故障时返回过期缓存，用户无感
+      if (hasStale) return stale;
+      throw error;
+    }
   })();
   inflight.set(key, promise);
   try {
